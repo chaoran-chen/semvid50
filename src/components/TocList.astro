@@ -1,0 +1,24 @@
+---
+import TocList from './TocList.astro';
+
+export interface TocNode {
+  slug: string;
+  text: string;
+  children: TocNode[];
+}
+interface Props {
+  items: TocNode[];
+}
+const { items } = Astro.props;
+---
+
+<ol>
+  {
+    items.map((item) => (
+      <li>
+        <a href={`#${item.slug}`}>{item.text}</a>
+        {item.children.length > 0 && <TocList items={item.children} />}
+      </li>
+    ))
+  }
+</ol>

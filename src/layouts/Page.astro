@@ -1,0 +1,97 @@
+---
+import FictionBanner from '../components/FictionBanner.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Toc from '../components/Toc.astro';
+import ImageViewer from '../components/ImageViewer.astro';
+import type { MarkdownHeading } from 'astro';
+import logo from '../assets/semvid-50_wiki-logo.png';
+import { SITE } from '../site';
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  /** The opening of the page's own text; falls back to naming the page. */
+  description?: string;
+  headings?: MarkdownHeading[];
+  current?: 'home' | 'all-pages' | 'about' | 'search';
+  /**
+   * Whether this page belongs in the search index. The all-pages index and the
+   * search page have no text of their own, and the former lists every title,
+   * so indexing them would match almost any query.
+   */
+  searchable?: boolean;
+  /** Whether the page has figures, and so needs the click-to-enlarge script. */
+  images?: boolean;
+}
+
+const {
+  title,
+  description,
+  headings = [],
+  current,
+  searchable = true,
+  images = false,
+} = Astro.props;
+
+const summary = description || `${title} — ${SITE.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — {SITE.name}</title>
+    <meta name="description" content={summary} />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fdf3e3" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={summary} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(logo.src, Astro.site)} />
+    <meta property="og:image:width" content={String(logo.width)} />
+    <meta property="og:image:height" content={String(logo.height)} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <FictionBanner />
+    <SiteHeader current={current} />
+
+    <div class="layout">
+      <Toc headings={headings} />
+
+      <main id="main">
+        <article class="article" data-pagefind-body={searchable ? true : undefined}>
+          <header class="article-header">
+            <h1>{title}</h1>
+          </header>
+
+          <div class="prose">
+            <slot />
+          </div>
+        </article>
+      </main>
+    </div>
+
+    {images && <ImageViewer />}
+
+    <footer class="site-footer">
+      <p class="site-license">
+        Except where otherwise noted, content on this wiki is licensed under the following license: <a
+          class="external"
+          rel="license noopener"
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en"
+          >CC Attribution-Noncommercial-Share Alike 4.0 International</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>

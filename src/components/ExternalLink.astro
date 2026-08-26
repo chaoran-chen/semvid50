@@ -1,0 +1,12 @@
+---
+// A link off the site, marked with an arrow, or with Wikipedia's W.
+interface Props {
+  href: string;
+  type?: 'wikipedia';
+}
+const { href, type } = Astro.props;
+---
+
+<a class={type === 'wikipedia' ? 'external-wikipedia' : 'external'} rel="noopener" href={href}
+  ><slot /></a
+>

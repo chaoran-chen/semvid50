@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Page from '../layouts/Page.astro';
+import { articlePages, summary, type Page as WikiPage } from '../wiki';
+
+interface Props {
+  page: WikiPage;
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const pages = await articlePages();
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+};
+
+const { page } = Astro.props;
+const { Content, headings } = await render(page);
+---
+
+<Page
+  title={page.data.title}
+  description={summary(page)}
+  headings={headings}
+  images={/!\[/.test(page.body ?? '')}
+>
+  <Content />
+</Page>

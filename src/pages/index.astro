@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from 'astro:content';
+import Page from '../layouts/Page.astro';
+import { SITE } from '../site';
+import { summary } from '../wiki';
+
+const home = await getEntry('wiki', SITE.homeId);
+if (!home) throw new Error(`Missing the page rendered at the site root: ${SITE.homeId}`);
+
+const { Content, headings } = await render(home);
+---
+
+<Page
+  title={home.data.title}
+  description={summary(home)}
+  headings={headings}
+  images={/!\[/.test(home.body ?? '')}
+  current="home"
+>
+  <Content />
+</Page>

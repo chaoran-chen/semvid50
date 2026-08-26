@@ -1,0 +1,64 @@
+---
+// Click-to-enlarge for figures. Enhancement only: with no script the figures
+// are unchanged, just not enlargeable.
+---
+
+<dialog id="image-viewer" class="image-viewer">
+  <form method="dialog">
+    <button class="image-viewer-close" aria-label="Close image">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </form>
+  <img id="image-viewer-img" alt="" />
+</dialog>
+
+<script is:inline>
+  (function () {
+    var dialog = document.getElementById('image-viewer');
+    var large = document.getElementById('image-viewer-img');
+    var figures = document.querySelectorAll('.prose figure img');
+    if (!dialog || !large || !figures.length || typeof dialog.showModal !== 'function') return;
+
+    // Source images run to 7728px wide; past this a variant only costs the
+    // reader a long download.
+    var MAX_WIDTH = 2560;
+
+    function bestSource(img) {
+      var best = { url: img.currentSrc || img.src, width: 0 };
+      (img.getAttribute('srcset') || '').split(',').forEach(function (candidate) {
+        var parts = candidate.trim().split(/\s+/);
+        var width = parseInt(parts[1], 10);
+        if (parts[0] && width > best.width && width <= MAX_WIDTH) {
+          best = { url: parts[0], width: width };
+        }
+      });
+      return best.url;
+    }
+
+    figures.forEach(function (img) {
+      // A button, so the control is reachable from the keyboard and announced
+      // as one.
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'image-zoom';
+      button.setAttribute('aria-label', 'Enlarge image');
+      img.parentNode.insertBefore(button, img);
+      button.appendChild(img);
+
+      button.addEventListener('click', function () {
+        large.src = bestSource(img);
+        large.alt = img.alt;
+        dialog.showModal();
+      });
+    });
+
+    dialog.addEventListener('click', function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', function () {
+      large.removeAttribute('src');
+      large.alt = '';
+    });
+  })();
+</script>

@@ -1,0 +1,727 @@
+/* ------------------------------------------------------------------ tokens */
+
+:root {
+  color-scheme: light;
+
+  --page: #ffffff;
+  --chrome: #f8f9fa;
+  --rule: #c8ccd1;
+  --rule-soft: #e4e7eb;
+  --text: #202122;
+  --text-soft: #54595d;
+  --link: #3366cc;
+  --wanted: #b32424;
+  /* The hovered node in the page network, apart from the blue of the pages it
+     points at. Clears 3:1 against the figure it sits on. */
+  --accent: #c96a10;
+  --notice: #fdf3e3;
+  --notice-rule: #a97b17;
+  --focus: #2a4b8d;
+  --mark: #fbe9a8;
+  --mark-text: #202122;
+  --field: #ffffff;
+
+  --sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --serif: Georgia, 'Times New Roman', 'Liberation Serif', serif;
+
+  --rail: 15.5rem;
+  --measure: 46rem;
+  --gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------- baseline */
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* A page id or bare URL used as link text is one unbreakable token. */
+.prose,
+.search-results {
+  overflow-wrap: break-word;
+}
+
+/* Marked with an image rather than generated text, which a screen reader would
+   read out on every link. Wikipedia gets its own W, from
+   commons.wikimedia.org/wiki/File:Wikipedia's_W.svg — a letterform too plain to
+   be copyrightable, and a Wikimedia Foundation trademark used here for what it
+   names. */
+a.external,
+a.external-wikipedia {
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+a.external {
+  background-size: 0.625em;
+  padding-right: 0.9em;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2710%27%20height%3D%2710%27%20viewBox%3D%270%200%2010%2010%27%3E%3Cpath%20fill%3D%27none%27%20stroke%3D%27%233366cc%27%20stroke-width%3D%271.2%27%20d%3D%27M4%201H1v8h8V6M6%201h3v3M9%201%204.5%205.5%27%2F%3E%3C%2Fsvg%3E');
+}
+a.external-wikipedia {
+  background-size: 0.85em;
+  padding-right: 1em;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%277%2028%20114%2072%27%3E%3Cpath%20fill%3D%27%233366cc%27%20d%3D%27M%20120.85,29.21%20C%20120.85,29.62%20120.72,29.99%20120.47,30.33%20C%20120.21,30.66%20119.94,30.83%20119.63,30.83%20C%20117.14,31.07%20115.09,31.87%20113.51,33.24%20C%20111.92,34.6%20110.29,37.21%20108.6,41.05%20L%2082.8,99.19%20C%2082.63,99.73%2082.16,100%2081.38,100%20C%2080.77,100%2080.3,99.73%2079.96,99.19%20L%2065.49,68.93%20L%2048.85,99.19%20C%2048.51,99.73%2048.04,100%2047.43,100%20C%2046.69,100%2046.2,99.73%2045.96,99.19%20L%2020.61,41.05%20C%2019.03,37.44%2017.36,34.92%2015.6,33.49%20C%2013.85,32.06%2011.4,31.17%208.27,30.83%20C%208,30.83%207.74,30.69%207.51,30.4%20C%207.27,30.12%207.15,29.79%207.15,29.42%20C%207.15,28.47%207.42,28%207.96,28%20C%2010.22,28%2012.58,28.1%2015.05,28.3%20C%2017.34,28.51%2019.5,28.61%2021.52,28.61%20C%2023.58,28.61%2026.01,28.51%2028.81,28.3%20C%2031.74,28.1%2034.34,28%2036.6,28%20C%2037.14,28%2037.41,28.47%2037.41,29.42%20C%2037.41,30.36%2037.24,30.83%2036.91,30.83%20C%2034.65,31%2032.87,31.58%2031.57,32.55%20C%2030.27,33.53%2029.62,34.81%2029.62,36.4%20C%2029.62,37.21%2029.89,38.22%2030.43,39.43%20L%2051.38,86.74%20L%2063.27,64.28%20L%2052.19,41.05%20C%2050.2,36.91%2048.56,34.23%2047.28,33.03%20C%2046,31.84%2044.06,31.1%2041.46,30.83%20C%2041.22,30.83%2041,30.69%2040.78,30.4%20C%2040.56,30.12%2040.45,29.79%2040.45,29.42%20C%2040.45,28.47%2040.68,28%2041.16,28%20C%2043.42,28%2045.49,28.1%2047.38,28.3%20C%2049.2,28.51%2051.14,28.61%2053.2,28.61%20C%2055.22,28.61%2057.36,28.51%2059.62,28.3%20C%2061.95,28.1%2064.24,28%2066.5,28%20C%2067.04,28%2067.31,28.47%2067.31,29.42%20C%2067.31,30.36%2067.15,30.83%2066.81,30.83%20C%2062.29,31.14%2060.03,32.42%2060.03,34.68%20C%2060.03,35.69%2060.55,37.26%2061.6,39.38%20L%2068.93,54.26%20L%2076.22,40.65%20C%2077.23,38.73%2077.74,37.11%2077.74,35.79%20C%2077.74,32.69%2075.48,31.04%2070.96,30.83%20C%2070.55,30.83%2070.35,30.36%2070.35,29.42%20C%2070.35,29.08%2070.45,28.76%2070.65,28.46%20C%2070.86,28.15%2071.06,28%2071.26,28%20C%2072.88,28%2074.87,28.1%2077.23,28.3%20C%2079.49,28.51%2081.35,28.61%2082.8,28.61%20C%2083.84,28.61%2085.38,28.52%2087.4,28.35%20C%2089.96,28.12%2092.11,28%2093.83,28%20C%2094.23,28%2094.43,28.4%2094.43,29.21%20C%2094.43,30.29%2094.06,30.83%2093.32,30.83%20C%2090.69,31.1%2088.57,31.83%2086.97,33.01%20C%2085.37,34.19%2083.37,36.87%2080.98,41.05%20L%2071.26,59.02%20L%2084.42,85.83%20L%20103.85,40.65%20C%20104.52,39%20104.86,37.48%20104.86,36.1%20C%20104.86,32.79%20102.6,31.04%2098.08,30.83%20C%2097.67,30.83%2097.47,30.36%2097.47,29.42%20C%2097.47,28.47%2097.77,28%2098.38,28%20C%20100.03,28%20101.99,28.1%20104.25,28.3%20C%20106.34,28.51%20108.1,28.61%20109.51,28.61%20C%20111,28.61%20112.72,28.51%20114.67,28.3%20C%20116.7,28.1%20118.52,28%20120.14,28%20C%20120.61,28%20120.85,28.4%20120.85,29.21%20z%27%2F%3E%3C%2Fsvg%3E');
+}
+
+/* A link whose page was never written: text, not a link. */
+.wanted {
+  color: var(--wanted);
+  border-bottom: 1px dotted currentColor;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--page);
+  border: 1px solid var(--rule);
+  font-weight: 600;
+  transition: top 120ms ease-out;
+}
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* ----------------------------------------------------------------- banner */
+
+.fiction-banner {
+  background: var(--notice);
+  border-bottom: 1px solid var(--notice-rule);
+}
+.fiction-banner p {
+  margin: 0 auto;
+  padding: 0.6rem var(--gap);
+  max-width: 78rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* ----------------------------------------------------------------- header */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem var(--gap);
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 1rem var(--gap);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: inherit;
+}
+.brand img {
+  flex: none;
+}
+
+.brand-name {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.6rem);
+  line-height: 1.15;
+}
+
+/* ----------------------------------------------------------------- search */
+
+.header-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.site-search form {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.site-search input {
+  min-width: 0;
+  width: 14rem;
+  padding: 0.4rem 0.6rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--text);
+  background: var(--field);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+
+.site-search button {
+  padding: 0.4rem 0.8rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--text);
+  background: var(--chrome);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.site-search button:hover {
+  border-color: var(--text-soft);
+}
+
+@media (max-width: 40rem) {
+  .header-tools {
+    width: 100%;
+  }
+  .site-search {
+    flex: 1 1 100%;
+  }
+  .site-search input {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
+
+.site-header nav ul {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+.site-header nav [aria-current='page'] {
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------------- layout */
+
+.layout {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 0 var(--gap) 3rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: minmax(0, var(--measure)) var(--rail);
+    justify-content: center;
+    align-items: start;
+  }
+  main {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .toc {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* --------------------------------------------------- disclosure (contents) */
+
+/* Collapsed by default, which suits a narrow screen, and forced open where the
+   rail has room. No script involved. */
+.disclosure {
+  font-size: 0.9375rem;
+}
+
+.disclosure > summary {
+  cursor: pointer;
+  padding: 0.6rem 0;
+  font-weight: 700;
+  font-family: var(--serif);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.disclosure ol,
+.disclosure ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+.disclosure li {
+  margin: 0.2rem 0;
+}
+.disclosure [aria-current='page'] {
+  font-weight: 700;
+}
+
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+}
+.toc li {
+  counter-increment: toc;
+}
+.toc li > a::before {
+  content: counters(toc, '.') ' ';
+  color: var(--text-soft);
+}
+
+@media (min-width: 60rem) {
+  .toc {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding-top: 1.25rem;
+  }
+  .disclosure > summary {
+    cursor: default;
+    list-style: none;
+    pointer-events: none;
+  }
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclosure > *:not(summary) {
+    display: block;
+  }
+  .disclosure::details-content {
+    content-visibility: visible;
+    block-size: auto;
+  }
+}
+
+@media (max-width: 59.999rem) {
+  .toc {
+    padding-top: 1rem;
+  }
+  .toc .disclosure ol {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+/* ---------------------------------------------------------------- article */
+
+main {
+  min-width: 0;
+  padding-top: 1.25rem;
+}
+
+.article-header {
+  margin-bottom: 1.5rem;
+}
+
+.article-header h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 1.4rem + 1.8vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  margin: 2rem 0 0.6rem;
+  line-height: 1.25;
+  scroll-margin-top: 1rem;
+}
+.prose h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 1.25rem + 0.7vw, 1.75rem);
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.prose h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.prose h4 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+.prose h5,
+.prose h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin: 0 0 1rem;
+}
+.prose li {
+  margin: 0.25rem 0;
+}
+
+/* ------------------------------------------------------- tables and media */
+
+.prose table {
+  border-collapse: collapse;
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+  background: var(--chrome);
+  border: 1px solid var(--rule);
+}
+.prose th,
+.prose td {
+  padding: 0.4rem 0.7rem;
+  border-bottom: 1px solid var(--rule-soft);
+  text-align: left;
+  vertical-align: top;
+}
+.prose tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+/* A header over a group of columns belongs above the middle of the group. */
+.prose thead th[colspan] {
+  text-align: center;
+}
+.prose th[scope='row'] {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.prose tbody th[scope='row'] {
+  border-right: 1px solid var(--rule-soft);
+}
+
+.prose figure {
+  max-width: min(100%, var(--figure-width, 100%));
+  margin: 0 0 1.5rem;
+  padding: 0.5rem;
+  background: var(--chrome);
+  border: 1px solid var(--rule);
+}
+.prose figure[data-align='center'] {
+  margin-inline: auto;
+}
+/* Floating is what DokuWiki does with an aligned image, but only where the
+   column is wide enough for text to sit beside it. */
+@media (min-width: 60rem) {
+  .prose figure[data-align='right'] {
+    float: right;
+    clear: right;
+    margin-left: 1.5rem;
+  }
+  .prose figure[data-align='left'] {
+    float: left;
+    clear: left;
+    margin-right: 1.5rem;
+  }
+  .prose:has(figure[data-align='left'], figure[data-align='right']) :is(h2, h3, h4, h5, h6) {
+    clear: both;
+  }
+}
+.prose figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-soft);
+}
+
+/* A long reference list, folded away until it is asked for. Not `.disclosure`:
+   that one is forced open where the sidebar has room. */
+.prose details {
+  margin: 0 0 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+.prose summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-family: var(--serif);
+  font-size: 1.125rem;
+}
+/* A topic is one dense block of reference: the article's heading rhythm puts
+   more air between its parts than they want. */
+.prose details h3 {
+  margin-top: 1.5rem;
+}
+.prose details h4 {
+  margin-top: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+.prose details ul {
+  margin-bottom: 0.5rem;
+}
+.prose details li {
+  margin: 0.1rem 0;
+}
+
+/* Wide content scrolls inside its own box rather than widening the page. */
+.scroll-box {
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+}
+.scroll-box table {
+  margin: 0;
+}
+
+/* ----------------------------------------------------------- image viewer */
+
+/* Wraps the image without changing how the figure looks. */
+.image-zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.image-zoom img {
+  display: block;
+}
+
+/* The dialog fills the viewport and carries the dim itself; ::backdrop alone
+   does not render consistently. */
+.image-viewer {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(0 0 0 / 0.85);
+  overflow: hidden;
+}
+.image-viewer::backdrop {
+  background: rgb(0 0 0 / 0.85);
+}
+
+.image-viewer[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-viewer img {
+  display: block;
+  max-width: 96vw;
+  max-height: 92dvh;
+  margin: auto;
+  cursor: zoom-out;
+}
+
+.image-viewer form {
+  margin: 0;
+}
+
+.image-viewer-close {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text);
+  background: var(--page);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.image-viewer-close:hover {
+  border-color: var(--text-soft);
+}
+
+/* ------------------------------------------------------------ search page */
+
+.search-status {
+  color: var(--text-soft);
+}
+.search-status:focus {
+  outline: none;
+}
+.search-status:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.prose .search-results {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.prose .search-results > li {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.prose .search-results > li:last-child {
+  border-bottom: 0;
+}
+
+.prose .search-results h2 {
+  margin: 0 0 0.35rem;
+  padding: 0;
+  border: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+.prose .search-excerpt {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.9375rem;
+}
+.prose .search-excerpt mark {
+  background: var(--mark);
+  color: var(--mark-text);
+  padding: 0 0.1em;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------ page network */
+
+/* Inside a figure the caption follows straight on; the trailing space a table
+   needs is not wanted there. */
+.prose figure .scroll-box {
+  margin-bottom: 0;
+}
+
+.graph {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Narrower than this the labels stop being readable, so the box scrolls. */
+  min-width: 44rem;
+}
+.graph-edge {
+  stroke: var(--text-soft);
+  stroke-width: 1.2;
+}
+.graph-arrowhead {
+  fill: var(--text-soft);
+}
+.graph-node circle {
+  fill: var(--chrome);
+  stroke: var(--text-soft);
+  stroke-width: 1.2;
+}
+.graph-node text {
+  fill: var(--link);
+  font-size: 11px;
+  text-anchor: middle;
+  /* A halo in the figure's own colour, so a label stays readable where a line
+     passes behind it. */
+  paint-order: stroke;
+  stroke: var(--chrome);
+  stroke-width: 3px;
+}
+.graph-node:hover text {
+  text-decoration: underline;
+}
+/* The node under the pointer, told apart from the pages it points at, which the
+   page's own rules fill in the link colour. */
+.graph-node:hover circle,
+.graph-node:focus-visible circle {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+/* --------------------------------------------------------- all-pages index */
+
+.index-groups {
+  columns: 2 14rem;
+  column-gap: 2rem;
+}
+.index-groups > section {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
+.index-groups h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.5rem;
+  margin: 0 0 0.4rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.index-groups ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+/* ---------------------------------------------------------------- footers */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  background: var(--chrome);
+}
+.site-footer p {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 0 var(--gap);
+  font-size: 0.875rem;
+  color: var(--text-soft);
+}
+.site-footer p:first-child {
+  padding-top: 1.25rem;
+}
+.site-footer p:last-child {
+  padding-bottom: 1.25rem;
+}
+.site-license {
+  margin-top: 0.4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

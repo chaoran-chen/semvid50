@@ -1,0 +1,8 @@
+dist/
+.astro/
+storage/
+package-lock.json
+
+# Written by tools/import.py, and reformatting would make its output no longer
+# match what is committed.
+src/content/wiki/

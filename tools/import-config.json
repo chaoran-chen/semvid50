@@ -1,0 +1,23 @@
+{
+  "_comment": "Per-page and per-image overrides that were applied by tools/import.py. That import has run for the last time; src/content/wiki/ is the source now.",
+  "exclude": ["wiki:*", "playground:*"],
+  "links": {
+    "myth-for-mosquitos": "british_campaign_against_semvid-50_myths_for_mosquitos",
+    "semvid-50_contact_tracing#the_gemeinsam-sicher_app": "semvid_50_countermeasures#the_gemeinsam-sicher_app",
+    "semvid_50_countermeasures#semvid-50_german_contact_tracing": "semvid_50_countermeasures#tracking_the_spread",
+    "semvid_50_countermeasures#semvid-50_vector_identification_and_control": "semvid_50_countermeasures#semvid_vector_identification_and_control",
+    "semvid_50_countermeasures#teasting_measures": "semvid_50_countermeasures#testing_measures",
+    "start": "timeline"
+  },
+  "media": {
+    "origin_of_semvid-50_progr.png": {
+      "width": 736
+    },
+    "outbreak_tree_initial.png": {
+      "width": 736
+    },
+    "stiftis_in_swiss_alps.jpg": {
+      "width": 300
+    }
+  }
+}

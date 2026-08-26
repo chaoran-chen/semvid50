@@ -1,0 +1,155 @@
+---
+import Page from '../layouts/Page.astro';
+---
+
+<Page title="Search" current="search" searchable={false}>
+  <p id="search-status" role="status" tabindex="-1" class="search-status"></p>
+  <ol id="search-results" class="search-results"></ol>
+  <p id="search-empty" class="search-empty" hidden>
+    Try a shorter or more general term, or browse <a href="/all-pages/">all pages</a>.
+  </p>
+
+  <noscript>
+    <p>
+      Search needs JavaScript, because this is a static site with no server to ask. Every page is
+      listed on the <a href="/all-pages/">all pages</a> index.
+    </p>
+  </noscript>
+</Page>
+
+<script is:inline>
+  // Inline and unprocessed on purpose: Pagefind's bundle is generated into the
+  // build output, and left to the bundler the import gets wrapped in a
+  // module-preload helper that fails on a specifier it cannot resolve.
+  (function () {
+    var input = document.getElementById('site-search-input');
+    var status = document.getElementById('search-status');
+    var list = document.getElementById('search-results');
+    var empty = document.getElementById('search-empty');
+    if (!input || !status || !list || !empty) return;
+
+    var pagefind;
+    var loadFailed = false;
+
+    function engine() {
+      if (pagefind || loadFailed) return Promise.resolve(pagefind);
+      return import('/pagefind/pagefind.js').then(
+        function (module) {
+          pagefind = module;
+          return pagefind;
+        },
+        function () {
+          loadFailed = true;
+          status.hidden = false;
+          status.textContent =
+            'The search index could not be loaded. Every page is listed on the all pages index.';
+          return undefined;
+        },
+      );
+    }
+
+    function render(entries, term) {
+      list.replaceChildren();
+
+      entries.forEach(function (entry) {
+        var item = document.createElement('li');
+
+        var heading = document.createElement('h2');
+        var link = document.createElement('a');
+        link.href = entry.url;
+        link.textContent = entry.meta.title || entry.url;
+        heading.appendChild(link);
+
+        var excerpt = document.createElement('p');
+        excerpt.className = 'search-excerpt';
+        // Pagefind wraps matches in <mark>; this is our own build output.
+        excerpt.innerHTML = entry.excerpt;
+
+        item.appendChild(heading);
+        item.appendChild(excerpt);
+        list.appendChild(item);
+      });
+
+      empty.hidden = entries.length > 0;
+      status.hidden = false;
+      status.textContent = entries.length
+        ? entries.length +
+          (entries.length === 1 ? ' page matching ' : ' pages matching ') +
+          '“' +
+          term +
+          '”.'
+        : 'No pages match “' + term + '”.';
+    }
+
+    function run(raw, moveFocus) {
+      var term = raw.trim();
+
+      if (!term) {
+        list.replaceChildren();
+        empty.hidden = true;
+        status.hidden = false;
+        status.textContent = 'Enter a term in the search field above.';
+        return;
+      }
+
+      // Only while the index is still being fetched. Once it is loaded a search
+      // resolves immediately, and announcing this on every keystroke would make
+      // the live region unusable.
+      if (!pagefind && !loadFailed) {
+        status.hidden = false;
+        status.textContent = 'Searching\u2026';
+      }
+
+      return engine().then(function (instance) {
+        if (!instance) return;
+        return instance.search(term).then(function (search) {
+          // A slow response must not overwrite results for what is now typed.
+          if (input.value.trim() !== term) return;
+          return Promise.all(
+            search.results.map(function (result) {
+              return result.data();
+            }),
+          ).then(function (entries) {
+            if (input.value.trim() !== term) return;
+            render(entries, term);
+            // Only on an explicit submit. Doing it while someone types would
+            // pull focus out of the field on every keystroke.
+            if (moveFocus) status.focus();
+          });
+        });
+      });
+    }
+
+    /** Keeps the address bar in step, so a result page stays linkable. */
+    function syncUrl(term) {
+      history.replaceState(
+        null,
+        '',
+        term ? location.pathname + '?q=' + encodeURIComponent(term) : location.pathname,
+      );
+    }
+
+    var timer;
+    input.addEventListener('input', function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        syncUrl(input.value.trim());
+        run(input.value, false);
+      }, 180);
+    });
+
+    // Submitting would reload the page to reach results already on screen.
+    if (input.form) {
+      input.form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        clearTimeout(timer);
+        syncUrl(input.value.trim());
+        run(input.value, true);
+      });
+    }
+
+    var initial = new URLSearchParams(location.search).get('q') || '';
+    if (initial) input.value = initial;
+    run(initial, false);
+  })();
+</script>

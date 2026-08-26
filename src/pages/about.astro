@@ -1,0 +1,688 @@
+---
+import { Image } from 'astro:assets';
+import ExternalLink from '../components/ExternalLink.astro';
+import group from '../images/group.jpg';
+import Page from '../layouts/Page.astro';
+
+// This page is written by hand, so its contents list is too. rehype-slug gives
+// the wiki pages their heading ids; here the ids below are the headings'.
+const headings = [
+  { depth: 2, slug: 'the-participants', text: 'The participants' },
+  { depth: 2, slug: 'the-process', text: 'The process' },
+  { depth: 2, slug: 'preparation-material', text: 'Preparation material' },
+];
+---
+
+<Page
+  title="About this project"
+  description="This wiki is the output of a workshop held at the Summer Academy of the German Academic Scholarship Foundation (Studienstiftung des deutschen Volkes) in Leysin, Switzerland, in August 2026. For a…"
+  current="about"
+  headings={headings}
+  images
+>
+  <p>
+    This wiki is the output of a workshop held at the Summer Academy of the German Academic
+    Scholarship Foundation (Studienstiftung des deutschen Volkes) in Leysin, Switzerland, in August
+    2026. For a week, the students of Working Group 4 (AG 4) traveled to October 2051, where the end
+    of a <a href="/">fictional pandemic</a>, caused by the <a href="/semvid_virus/"
+      >imaginary SEMViD virus</a
+    >, had just been <a href="/end_of_the_semvid-50_public_health_emergency_speech/"
+      >declared by the World Health Organization</a
+    >. With the aim of exploring the wide variety of scientific and societal aspects of pandemics,
+    the students from various disciplines filled this fictional scenario with details about the
+    properties of the virus and the disease, the events of the outbreak, medical and public health
+    countermeasures, societal impact, and the risks of misinformation. Taking inspiration from
+    Wikipedia (specifically its COVID-19 project), the results of this scenario building process
+    were documented in the form of a wiki.
+  </p>
+
+  <h2 id="the-participants">The participants</h2>
+  <figure>
+    <Image src={group} alt="" sizes="(min-width: 60rem) 46rem, 100vw" />
+  </figure>
+  <ul>
+    <li>Cora Burkhard (Medicine)</li>
+    <li>Elias Fischer (Biochemistry)</li>
+    <li>Hannah Wiesner (Medicine)</li>
+    <li>Jakob Reichelt (Visual Communication)</li>
+    <li>Jan Birmanns (Mathematics)</li>
+    <li>Julia Hartwich (Public Health)</li>
+    <li>Leon-Peter Schollmeier (Biology, German Studies, Educational Science)</li>
+    <li>Mika Niedernhuber (Business Administration)</li>
+    <li>Nicoli Corsac (Medicine)</li>
+    <li>Robin Schulze-Tammena (Physics, Mathematics, Computer Science)</li>
+    <li>Sebastian Bürger (Physics)</li>
+  </ul>
+  <p>
+    The workshop was led by <ExternalLink
+      href="https://bsse.ethz.ch/cevo/the-group/people/person-detail.adrian-lison.html"
+      >Dr. Adrian Lison</ExternalLink
+    > and <ExternalLink href="https://bsse.ethz.ch/cevo/the-group/people/person-detail.cchen.html"
+      >Dr. Chaoran Chen</ExternalLink
+    > from the <ExternalLink href="https://bsse.ethz.ch/cevo"
+      >Computational Evolution Group</ExternalLink
+    > at ETH Zürich. Please feel free to reach out if you would like to know more about the workshop.
+  </p>
+
+  <h2 id="the-process">The process</h2>
+  <p>
+    The project ran over six half-days at the academy, with some preparation in the weeks before.
+  </p>
+  <ul>
+    <li>
+      Prior to the academy, everyone received a list of basic material for preparation consisting of
+      podcast and movie recommendations. Further, every participant chose an expert topic and
+      received reading material for preparation.
+    </li>
+    <li>
+      During the workshop, the facilitators set the topic and aim of each session while the students
+      decided themselves how to address them. Every day, two students were assigned co-editors and
+      organized the session.
+    </li>
+    <li>
+      The structure of the sessions and discussions changed over the week, from a lot of
+      brainstorming in the beginning to a Kanban-style approach towards the end.
+    </li>
+    <li>
+      The results were written into a local instance of the DokuWiki software and updated on a
+      rolling basis. This site is a static, read-only export of that wiki.
+    </li>
+  </ul>
+
+  <h2 id="preparation-material">Preparation material</h2>
+
+  <details>
+    <summary>Basic material (for everyone)</summary>
+    <ul>
+      <li>
+        Four episodes of the German podcast <em>Pandemia</em>: <ExternalLink
+          href="https://wissenschaftspodcasts.de/podcasts/pandemia/pest-1-i-hongkong-und-das-ringen-um-ruhm_9842433/"
+          >Pest (1) | Hongkong und das Ringen um Ruhm</ExternalLink
+        > (on the first modern pandemic), <ExternalLink
+          href="https://wissenschaftspodcasts.de/podcasts/pandemia/pandemievertrag-bei-sars-cov-3-wird-alles-besser_9725223/"
+          >Pandemievertrag | Bei SARS-CoV-3 wird alles besser</ExternalLink
+        > (on the pandemic treaty), <ExternalLink
+          href="https://wissenschaftspodcasts.de/podcasts/pandemia/bonus-i-toedliches-fieber-aus-dem-budongo-wald_9750332/"
+          >Bonus | Tödliches Fieber aus dem Budongo-Wald</ExternalLink
+        > (on zoonoses and spillover) and <ExternalLink
+          href="https://wissenschaftspodcasts.de/podcasts/pandemia/gefaehrliche-forschung-2-synthetische-zellen-und-die-pandemie-aus-dem-spiegel_9690203/"
+          >Gefährliche Forschung (2) | Synthetische Zellen und die Pandemie aus dem Spiegel</ExternalLink
+        > (on dual-use research)
+      </li>
+      <li>A short self-assessment quiz</li>
+      <li>
+        The film <ExternalLink
+          href="https://en.wikipedia.org/wiki/Contagion_(2011_film)"
+          type="wikipedia">Contagion</ExternalLink
+        > and the two-part discussion of it in the Micro Binfie podcast (<ExternalLink
+          href="https://www.happykhan.com/microbinfie/mb-136-contagion-part-1">part 1</ExternalLink
+        >, <ExternalLink href="https://www.happykhan.com/microbinfie/mb-137-contagion-part-2"
+          >part 2</ExternalLink
+        >)
+      </li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Expert topics and material (one per person)</summary>
+    <section>
+      <h3>Vaccines</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>How do vaccines work in principle, and what are the main technologies?</li>
+        <li>
+          What steps does vaccine development typically go through, up to actual distribution, and
+          what are the biggest challenges?
+        </li>
+        <li>
+          Which approaches are being discussed for developing and producing vaccines faster in
+          future?
+        </li>
+        <li>What are “platforms” in this context, and what is hoped for from them?</li>
+        <li>What keeps people from getting the vaccines they need?</li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink
+            href="https://www.cdc.gov/pinkbook/hcp/table-of-contents/chapter-1-principles-of-vaccination.html"
+            >Chapter 1: Principles of Vaccination | Pink Book | CDC</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8708925/"
+            >Vaccine Technologies and Platforms for Infectious Diseases: Current Progress,
+            Challenges, and Opportunities</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41591-021-01301-0"
+            >Vaccine development for emerging infectious diseases | Nature Medicine</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.1daysooner.org/about/">About 1Day Sooner</ExternalLink>
+        </li>
+        <li>
+          <ExternalLink href="https://www.1daysooner.org/challenge-intro/"
+            >What is a Challenge Study? | 1Day Sooner</ExternalLink
+          >
+        </li>
+        <li>
+          CEPI: <ExternalLink href="https://cepi.net/100-days-mission"
+            >The 100 Days Mission</ExternalLink
+          >
+        </li>
+        <li>
+          CEPI, topical: <ExternalLink
+            href="https://cepi.net/cepi-fast-tracks-three-bundibugyo-ebolavirus-vaccine-candidates"
+            >CEPI fast-tracks three Bundibugyo ebolavirus vaccine candidates</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://gh.bmj.com/content/7/7/e009709"
+            >A pandemic treaty for equitable global access to medical countermeasures: seven
+            recommendations for sharing intellectual property, know-how and technology | BMJ Global
+            Health</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Non-pharmaceutical interventions</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>
+          What kinds of non-pharmaceutical intervention (NPI, sometimes called public health and
+          social measures, PHSM) are there, and how are they meant to act on transmission?
+        </li>
+        <li>
+          Which kinds of NPI suit which transmission mechanisms and patterns of spread? How can
+          their effectiveness be studied or estimated?
+        </li>
+        <li>
+          What psychological, social and economic consequences do the various measures carry, and
+          how can those be softened?
+        </li>
+        <li>
+          Under what conditions does resistance to measures arise, and how does it show itself?
+        </li>
+        <li>
+          How have governments decided about putting NPIs in place in the past, and how should they
+          best decide and communicate?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink href="https://onlinelibrary.wiley.com/doi/pdf/10.1111/irv.13110"
+            >Public health and social measures during health emergencies such as the COVID-19
+            pandemic: An initial framework to conceptualize and classify measures</ExternalLink
+          >
+        </li>
+        <li>
+          The WHO PHSM Knowledge Hub: <ExternalLink
+            href="https://www.who.int/initiatives/who-public-health-and-social-measures-initiative"
+            >WHO Public Health and Social Measures Initiative</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.who.int/publications/i/item/9789240114623"
+            >A decision framework for effective, equitable and context-specific public health and
+            social measures during public health emergencies: decision navigator</ExternalLink
+          > (see Fig 8 for an overview)
+        </li>
+        <li>
+          Examples of successful early intervention: <ExternalLink
+            href="https://etdh.resolvetosavelives.org/2024"
+            >Epidemics That Didn't Happen | 2024</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://link.springer.com/article/10.1186/s12879-020-05340-9"
+            >Improving the impact of non-pharmaceutical interventions during COVID-19: examining the
+            factors that influence engagement and the impact on individuals | BMC Infectious
+            Diseases</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://royalsociety.org/-/media/policy/projects/impact-non-pharmaceutical-interventions-on-covid-19-transmission/the-royal-society-covid-19-examining-the-effectiveness-of-non-pharmaceutical-interventions-report.pdf"
+            >COVID-19: examining the effectiveness of non-pharmaceutical interventions | Royal
+            Society</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Contact tracing methods</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>What are the aims and the challenges of contact tracing?</li>
+        <li>
+          How do the pathogen's properties and the way it is transmitted affect how well contact
+          tracing works?
+        </li>
+        <li>How do (decentralised) contact tracing apps work?</li>
+        <li>
+          Which approaches could make contact tracing faster or better in future, or detect
+          infections earlier?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink href="https://www.digitalepibook.com/ch7.html"
+            >Digital Epidemiology, chapter 7</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://en.wikipedia.org/wiki/Contact_tracing" type="wikipedia"
+            >Contact tracing</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41467-020-20325-7"
+            >Bidirectional contact tracing could dramatically improve COVID-19 control | Nature
+            Communications</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41591-021-01593-2"
+            >Real-time alerting system for COVID-19 and other stress events using wearable data |
+            Nature Medicine</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9218991/"
+            >Detection and Monitoring of Viral Infections via Wearable Devices and Biometric Data</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Antivirals and other treatments</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>How do antivirals work in principle, and what are the main kinds?</li>
+        <li>How are antivirals developed and tested?</li>
+        <li>What other therapies are being researched at the moment?</li>
+        <li>What keeps people from getting the medicines they need?</li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          The Pandemia episode on Ebola, <ExternalLink
+            href="https://wissenschaftspodcasts.de/podcasts/pandemia/ebola-die-angst-der-anderen_10516257/"
+            >Die Angst der Anderen</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7975490/"
+            >A review: Mechanism of action of antiviral drugs</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12932771/"
+            >Antiviral drug discovery and development: challenges and future directions</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://gh.bmj.com/content/7/7/e009709"
+            >A pandemic treaty for equitable global access to medical countermeasures: seven
+            recommendations for sharing intellectual property, know-how and technology | BMJ Global
+            Health</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.cell.com/cell-host-microbe/fulltext/S1931-3128(23)00205-6"
+            >Antiviral strategies for epidemic and pandemic preparedness | Cell Host &amp; Microbe</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2024.1402932/full#s5"
+            >Aptamers: precision tools for diagnosing and treating infectious diseases | Frontiers</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Surveillance systems</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>What approaches are there for spotting and following outbreaks early?</li>
+        <li>Which of them are in place in Germany and Europe, and who is responsible for them?</li>
+        <li>
+          What are the strengths and weaknesses of each approach? Which kinds of epidemic is each
+          best suited to?
+        </li>
+        <li>How can different approaches complement one another and work together?</li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink href="https://academic.oup.com/jid/article/214/suppl_4/S380/2527913"
+            >Infectious Disease Surveillance in the Big Data Era: Towards Faster and Locally
+            Relevant Systems | The Journal of Infectious Diseases</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/nrg.2017.88"
+            >Towards a genomics-informed, real-time, global pathogen surveillance system | Nature
+            Reviews Genetics</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://journals.sagepub.com/doi/full/10.1089/hs.2023.0075"
+            >Wastewater Collection and Sequencing as a Proactive Approach to Utilizing Threat
+            Agnostic Biological Defense</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/d41586-018-05373-w"
+            >Pandemics: spend on surveillance, not prediction</ExternalLink
+          >
+        </li>
+        <li>
+          For the surveillance systems used in Germany, search for: IfSG reporting system and DEMIS,
+          SurvNet, TESSy, SUMO, GrippeWeb, IGS, AMELAG
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Laboratory safety and high-containment labs</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>How do high-containment laboratories work, what are they used for, and by whom?</li>
+        <li>
+          What criticism is there of the spread of such laboratories and of the research done in
+          them? What has to be weighed against what?
+        </li>
+        <li>
+          What are the most important safety measures in a high-containment laboratory, and what are
+          the commonest kinds of accident?
+        </li>
+        <li>
+          Which future developments, technological or regulatory, could improve safety, and which
+          could threaten it?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink
+            href="https://www.science.org/content/article/growing-number-high-security-pathogen-labs-around-world-raises-concerns"
+            >Growing number of high-security pathogen labs around world raises concerns | Science</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.youtube.com/watch?v=VN9oLpMHcIM&t=1s"
+            >The rise of maximum containment laboratories</ExternalLink
+          > (video)
+        </li>
+        <li>
+          <ExternalLink href="https://thebulletin.org/global-biolabs/"
+            >Global Biolabs | Bulletin of the Atomic Scientists</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.cdc.gov/training/quicklearns/biosafety/"
+            >CDC LC Quick Learn: Recognize the four Biosafety Levels</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://chathamhouse.soutron.net/Portal/Public/en-GB/RecordView/Index/203776"
+            >Laboratory accidents and biocontainment breaches: Policy options for improved safety
+            and security</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.science.org/doi/10.1126/science.aar2231"
+            >Risk-based reboot for global lab biosafety | Science</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2019.00182/full"
+            >Cyberbiosecurity Implications for the Laboratory of the Future | Frontiers</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://en.wikipedia.org/wiki/COVID-19_lab_leak_theory"
+            type="wikipedia">COVID-19 lab leak theory</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Genome synthesis and editing</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>
+          Where does the technology for synthesising and editing genes stand: what is already
+          feasible, and what will probably become possible?
+        </li>
+        <li>What are genome synthesis and editing used for in research on communicable disease?</li>
+        <li>
+          How could genome synthesis and editing be misused to make biological weapons, and how can
+          that be prevented?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink href="https://www.science.org/doi/full/10.1126/scitranslmed.3006368"
+            >Synthetic Generation of Influenza Vaccine Viruses for Rapid Response to Pandemics |
+            Science Translational Medicine</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41467-022-28103-3"
+            >Pandemic preparedness: synthetic biology and publicly funded biofoundries can rapidly
+            accelerate response time | Nature Communications</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/nrmicro3405"
+            >Gain-of-function experiments: time for a real debate | Nature Reviews Microbiology</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://documents.unoda.org/wp-content/uploads/2021/03/DF34C9AC22CDA925C1258455005C515ABWC_MX2_20190731_MHimmel_compressed.pdf"
+            >Strategies for the Risk Analysis of Genome Editing | BTWC</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41467-025-67955-3"
+            >Assembling unregulated DNA segments bypasses synthesis screening: regulate fragments as
+            select agents | Nature Communications</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.science.org/doi/10.1126/science.adu8578"
+            >Strengthening nucleic acid biosecurity screening against generative protein design
+            tools | Science</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Genetic forensics</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>
+          What could forensic methods be used for around an outbreak? What could they establish?
+        </li>
+        <li>What approaches are there for working out where a pathogen came from?</li>
+        <li>What makes that difficult, and how do developments in biological AI bear on it?</li>
+        <li>
+          What political questions arise when genetic forensics is used? Who should carry out such
+          investigations, and how should they communicate about them?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41467-020-19149-2"
+            >The biosecurity benefits of genetic engineering attribution | Nature Communications</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41467-020-19612-0"
+            >A machine learning toolkit for genetic engineering attribution to facilitate
+            biosecurity | Nature Communications</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://alliblk.github.io/genepi-book/the-value-of-pathogen-genomics-in-applied-epidemiology.html"
+            >The Genomic Epidemiology Handbook, chapters 2 and 3</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://en.wikipedia.org/wiki/Origin_of_SARS-CoV-2" type="wikipedia"
+            >Origin of SARS-CoV-2</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41467-022-35032-8"
+            >Analysis of the first genetic engineering attribution challenge | Nature Communications</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Genomic data and data sharing</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>How is a genetic sequence determined from a biological sample?</li>
+        <li>Who produces that data? Who are the stakeholders?</li>
+        <li>How and where is genomic data shared at the moment?</li>
+        <li>
+          What is the Pathogen Access and Benefit Sharing (PABS) framework, currently under
+          negotiation as part of the pandemic treaty, about?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink
+            href="https://www.cdc.gov/advanced-molecular-detection/about/what-is-genomic-sequencing.html"
+            >What is genomic sequencing? | CDC</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://en.wikipedia.org/wiki/Whole_genome_sequencing"
+            type="wikipedia">Whole genome sequencing</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://healthpolicy-watch.news/pandemic-talks-consider-two-opposing-models-for-pathogen-sharing/"
+            >Pandemic talks consider two opposing models for pathogen sharing | Health Policy Watch</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.medrxiv.org/content/10.64898/2026.06.27.26356737v1"
+            >Landscape of non-SARS-CoV-2 respiratory virus sequence data in Africa</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.who.int/publications/b/80650"
+            >Attributes and principles of genomic data-sharing platforms supporting surveillance of
+            pathogens with epidemic and pandemic potential</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://www.science.org/content/article/invented-persona-behind-key-pandemic-database"
+            >Control issues: invented persona behind key pandemic database | Science</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Climate change and other global drivers of pandemics</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>Which global developments make pandemics more likely, and how exactly do they act?</li>
+        <li>Which factors make a novel outbreak in Europe specifically more likely?</li>
+        <li>
+          Which of those factors can be influenced in the short term, say by policy, which only in
+          the long term, and which not at all?
+        </li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          <ExternalLink href="https://www.nature.com/articles/s41579-021-00639-z"
+            >Infectious disease in an era of global change | Nature Reviews Microbiology</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://link.springer.com/article/10.1007/s40121-022-00647-3"
+            >Climate Change and Cascading Risks from Infectious Disease | Infectious Diseases and
+            Therapy</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://www.science.org/doi/full/10.1126/science.1239401"
+            >Climate Change and Infectious Diseases: From Evidence to a Predictive Framework |
+            Science</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://en.wikipedia.org/wiki/Pandemic#Concerns_about_future_pandemics"
+            type="wikipedia">Pandemic: concerns about future pandemics</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Infodemics and misinformation</h3>
+      <h4>Guiding questions</h4>
+      <ul>
+        <li>How does misinformation affect public health and pandemics, and how did it?</li>
+        <li>Which forms of misinformation are typical of a pandemic?</li>
+        <li>What approaches are there for countering it?</li>
+      </ul>
+      <h4>Example material</h4>
+      <ul>
+        <li>
+          WHO resources: <ExternalLink href="https://www.who.int/health-topics/infodemic#tab=tab_1"
+            >Infodemic</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://infodemiology.jmir.org/2021/1/e30979"
+            >A Public Health Research Agenda for Managing Infodemics: Methods and Results of the
+            First WHO Infodemiology Conference | JMIR Infodemiology</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://www.imf.org/en/publications/fandd/issues/2020/06/richard-edelman-on-trust-during-the-covid19-pandemic"
+            >Richard Edelman on Trust during the COVID-19 Pandemic | IMF F&amp;D</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink
+            href="https://en.wikipedia.org/wiki/COVID-19_misinformation"
+            type="wikipedia">COVID-19 misinformation</ExternalLink
+          >
+        </li>
+        <li>
+          <ExternalLink href="https://en.wikipedia.org/wiki/Vaccine_misinformation" type="wikipedia"
+            >Vaccine misinformation</ExternalLink
+          >
+        </li>
+      </ul>
+    </section>
+  </details>
+</Page>

@@ -1,0 +1,9 @@
+.git
+node_modules
+dist
+.astro
+__pycache__
+
+# The import input and its unpacked copy; neither is needed to build the site.
+storage
+storage.zip

@@ -1,0 +1,116 @@
+---
+import Page from '../layouts/Page.astro';
+import { pageUrl } from '../site';
+import { allPages } from '../wiki';
+import { LABEL_LINE, LABEL_TOP, NODE_RADIUS, linkGraph } from '../graph';
+
+const pages = await allPages();
+const graph = await linkGraph();
+
+// Hovering a node fills the circles of the pages it links to. CSS cannot compare
+// one element's attribute with another's, so this needs a selector per page:
+// "if the hovered node lists me as a target, fill my circle". Page ids are
+// lower-case, digits, `_` and `-` only, so they need no escaping here.
+const linkedFrom = [...new Set(graph.nodes.flatMap((node) => node.to))].sort();
+const highlight = `${linkedFrom
+  .map((id) => `.graph:has([data-to~="${id}"]:is(:hover, :focus-visible)) [data-id="${id}"] circle`)
+  .join(',\n')} { fill: var(--link); stroke: var(--link); }`;
+
+// Group by initial letter, the way a wiki index does.
+const groups = new Map<string, typeof pages>();
+for (const page of pages) {
+  const letter = page.data.title[0].toUpperCase();
+  const key = /[A-Z]/.test(letter) ? letter : '#';
+  groups.set(key, [...(groups.get(key) ?? []), page]);
+}
+const letters = [...groups.keys()].sort();
+---
+
+<Page title="All pages" current="all-pages" searchable={false}>
+  <div class="index-groups">
+    {
+      letters.map((letter) => (
+        <section aria-labelledby={`index-${letter === '#' ? 'other' : letter}`}>
+          <h2 id={`index-${letter === '#' ? 'other' : letter}`}>{letter}</h2>
+          <ul>
+            {groups.get(letter)!.map((page) => (
+              <li>
+                <a href={pageUrl(page.id)}>{page.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <h2>Page network</h2>
+  <style is:inline set:html={highlight}></style>
+  <figure>
+    <div class="scroll-box" tabindex="0">
+      <svg class="graph" viewBox={graph.viewBox} xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker
+            id="graph-arrow"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="10"
+            markerHeight="10"
+            markerUnits="userSpaceOnUse"
+            orient="auto"
+          >
+            <path class="graph-arrowhead" d="M0,1 L10,5 L0,9 Z"></path>
+          </marker>
+          <marker
+            id="graph-arrow-back"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="10"
+            markerHeight="10"
+            markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse"
+          >
+            <path class="graph-arrowhead" d="M0,1 L10,5 L0,9 Z"></path>
+          </marker>
+        </defs>
+
+        {
+          graph.edges.map((edge) => (
+            <line
+              class="graph-edge"
+              x1={edge.x1}
+              y1={edge.y1}
+              x2={edge.x2}
+              y2={edge.y2}
+              marker-end="url(#graph-arrow)"
+              marker-start={edge.mutual ? 'url(#graph-arrow-back)' : undefined}
+            />
+          ))
+        }
+
+        {
+          graph.nodes.map((node) => (
+            <a
+              class="graph-node"
+              href={node.url}
+              data-id={node.id}
+              data-to={node.to.length ? node.to.join(' ') : undefined}
+            >
+              <title>{node.title}</title>
+              <circle cx={node.x} cy={node.y} r={NODE_RADIUS} />
+              <text x={node.x} y={node.y}>
+                {node.lines.map((line, index) => (
+                  <tspan x={node.x} dy={index === 0 ? LABEL_TOP : LABEL_LINE}>
+                    {line}
+                  </tspan>
+                ))}
+              </text>
+            </a>
+          ))
+        }
+      </svg>
+    </div>
+  </figure>
+</Page>

@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/semvid-50_wiki-logo.png';
+import SiteSearch from './SiteSearch.astro';
+import { SITE } from '../site';
+
+interface Props {
+  current?: 'home' | 'all-pages' | 'about' | 'search';
+}
+const { current } = Astro.props;
+---
+
+<header class="site-header">
+  <a class="brand" href="/">
+    <Image src={logo} alt="" width={48} height={48} densities={[1, 2]} />
+    <span class="brand-name">{SITE.name}</span>
+  </a>
+  <div class="header-tools">
+    <SiteSearch />
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="/" aria-current={current === 'home' ? 'page' : undefined}>Home</a></li>
+        <li>
+          <a href="/all-pages/" aria-current={current === 'all-pages' ? 'page' : undefined}>
+            All pages
+          </a>
+        </li>
+        <li><a href="/about/" aria-current={current === 'about' ? 'page' : undefined}>About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

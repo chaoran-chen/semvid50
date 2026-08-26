@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.astro/
+
+# Extracted from storage.zip by tools/import.py; the archive is the source of
+# record, and src/content/wiki/ holds what the site is built from.
+storage/
+
+# Byte-compiled Python from tools/
+__pycache__/
+
+# The DokuWiki archive is the import input, kept locally rather than in git:
+# it is tens of megabytes and a new one arrives with every workshop export.
+# src/content/wiki/ and src/assets/ are the tracked, reproducible record.
+storage.zip
